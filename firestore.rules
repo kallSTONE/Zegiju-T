@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: curricula
+    // Document ID: auto-generated
+    // Fields:
+    //   - userId: string (required) - UID of the owner
+    //   - topic: string (required, max 200 chars)
+    //   - audience: string (required, max 200 chars)
+    //   - duration: string (required, max 100 chars)
+    //   - goals: string (required, max 1000 chars)
+    //   - learningOutcomes: list (required, max 20 items)
+    //   - modules: list (required, max 20 items)
+    //   - syllabus: string (required, max 10000 chars)
+    //   - createdAt: number (required)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function isValidCurriculum(data) {
+      return data.userId == request.auth.uid &&
+             data.topic is string && data.topic.size() <= 200 &&
+             data.audience is string && data.audience.size() <= 200 &&
+             data.duration is string && data.duration.size() <= 100 &&
+             data.goals is string && data.goals.size() <= 1000 &&
+             data.learningOutcomes is list && data.learningOutcomes.size() <= 20 &&
+             data.modules is list && data.modules.size() <= 20 &&
+             data.syllabus is string && data.syllabus.size() <= 10000 &&
+             data.createdAt is number;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /curricula/{curriculumId} {
+      allow read: if isDocOwner();
+      allow create: if isAuthenticated() && isValidCurriculum(request.resource.data);
+      allow update: if isDocOwner() && isValidCurriculum(request.resource.data) && 
+                      request.resource.data.userId == resource.data.userId;
+      allow delete: if isDocOwner();
+    }
+
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}
