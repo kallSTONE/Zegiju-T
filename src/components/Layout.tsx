@@ -33,16 +33,16 @@ export default function Layout({ children, activeTab, setActiveTab, accessEmail 
     <div className="min-h-screen flex flex-col md:flex-row font-sans bg-[radial-gradient(circle_at_top_left,_rgba(37,99,235,0.16),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(20,184,166,0.14),_transparent_24%),linear-gradient(180deg,_#eef3f8_0%,_#f7fafc_100%)] text-slate-900">
       {/* Sidebar */}
       <aside className={cn(
-        "w-full md:w-80 flex-shrink-0 transition-all duration-300 z-20 bg-slate-950/95 text-white border-r border-white/10 backdrop-blur-2xl",
+        "w-full md:w-64 lg:w-68 flex-shrink-0 transition-all duration-300 z-20 bg-slate-950/95 text-white border-r border-white/10 backdrop-blur-2xl",
         isMenuOpen ? "h-screen fixed inset-0" : "h-auto md:h-screen sticky top-0"
       )}>
-        <div className="p-8 flex items-center justify-between border-b border-white/10">
+        <div className="p-6 flex items-center justify-between border-b border-white/10">
           <div className="flex items-center gap-3 group cursor-pointer">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 to-emerald-300 text-slate-950 shadow-lg shadow-cyan-950/30">
-              <GraduationCap className="w-6 h-6" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 to-emerald-300 text-slate-950 shadow-lg shadow-cyan-950/30">
+              <GraduationCap className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tight text-white">Zegiju.T</h1>
+              <h1 className="text-xl font-black tracking-tight text-white">Zegiju.T</h1>
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-cyan-300">Curriculum Studio</p>
             </div>
           </div>
@@ -54,7 +54,7 @@ export default function Layout({ children, activeTab, setActiveTab, accessEmail 
           </button>
         </div>
 
-        <div className="px-6 pt-6">
+        <div className="px-4 pt-4">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-inner shadow-slate-950/20">
             <div className="flex items-center gap-3">
               <Sparkles className="w-5 h-5 text-cyan-300" />
@@ -70,7 +70,7 @@ export default function Layout({ children, activeTab, setActiveTab, accessEmail 
           </div>
         </div>
 
-        <nav className="px-4 py-8 space-y-2">
+        <nav className="px-3 py-6 space-y-2">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -79,19 +79,19 @@ export default function Layout({ children, activeTab, setActiveTab, accessEmail 
                 setIsMenuOpen(false);
               }}
               className={cn(
-                "w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-semibold transition-all group",
+                "w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-[13px] font-semibold transition-all group",
                 activeTab === item.id 
                   ? "bg-white/10 text-white shadow-lg shadow-black/20 border border-white/10" 
                   : "text-slate-300 hover:bg-white/5 hover:text-white"
               )}
             >
-              <item.icon className={cn("w-5 h-5 transition-colors", activeTab === item.id ? "text-cyan-300" : "group-hover:text-cyan-300")} />
+              <item.icon className={cn("w-4 h-4 transition-colors", activeTab === item.id ? "text-cyan-300" : "group-hover:text-cyan-300")} />
               {item.label}
             </button>
           ))}
         </nav>
 
-        <div className="mt-auto p-6 border-t border-white/10 bg-slate-950/60">
+        <div className="mt-auto p-4 border-t border-white/10 bg-slate-950/60">
           {user ? (
             <div className="space-y-4">
               <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 shadow-sm">
@@ -103,7 +103,7 @@ export default function Layout({ children, activeTab, setActiveTab, accessEmail 
               </div>
               <button 
                 onClick={logOut}
-                className="w-full flex items-center gap-3 px-6 py-3 rounded-xl text-sm font-semibold text-slate-300 hover:bg-white/5 hover:text-white transition-all"
+                className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-white/5 hover:text-white transition-all"
               >
                 <LogOut className="w-5 h-5" />
                 Sign Out
@@ -125,7 +125,7 @@ export default function Layout({ children, activeTab, setActiveTab, accessEmail 
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
-        <header className="h-20 bg-white/55 border-b border-white/60 hidden md:flex items-center justify-between px-10 sticky top-0 z-10 backdrop-blur-xl">
+        <header className="h-16 bg-white/55 border-b border-white/60 hidden md:flex items-center justify-between px-8 sticky top-0 z-10 backdrop-blur-xl">
           <div className="flex items-center gap-3 text-slate-500 text-sm font-semibold">
             <span className="text-slate-900">Zegiju.T</span>
             <span className="text-slate-300">/</span>
@@ -137,7 +137,7 @@ export default function Layout({ children, activeTab, setActiveTab, accessEmail 
             </div>
           </div>
         </header>
-        <div className="p-5 md:p-10 lg:p-12 max-w-7xl mx-auto">
+        <div className="p-4 md:p-8 lg:p-10 max-w-6xl mx-auto">
           {children}
         </div>
       </main>
